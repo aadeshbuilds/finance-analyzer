@@ -1,0 +1,28 @@
+# Virtual environment — never commit this to GitHub
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Data files — bank statements are private, never commit real data
+data/raw/
+data/processed/
+
+# Trained models can be large — excluded by default
+models/*.pkl
+models/*.joblib
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables (API keys, secrets)
+.env
+
+# IDE files
+.vscode/
+.idea/
