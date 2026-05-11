@@ -1,0 +1,66 @@
+{
+    "model_version": "1.0.0",
+    "trained_date": "2026-05-11",
+    "best_model": "xgboost",
+    "models": {
+        "xgboost": {
+            "pipeline_file": "xgboost_pipeline.pkl",
+            "roc_auc": 0.9998,
+            "f1_score": 0.9991,
+            "precision": 1.0000,
+            "recall": 0.9982
+        },
+        "random_forest": {
+            "pipeline_file": "random_forest_pipeline.pkl",
+            "roc_auc": 0.9998,
+            "f1_score": 0.9991,
+            "precision": 1.0000,
+            "recall": 0.9982
+        },
+        "logistic_regression": {
+            "pipeline_file": "logistic_regression_pipeline.pkl",
+            "roc_auc": 0.9982,
+            "f1_score": 0.9461,
+            "precision": 0.9167,
+            "recall": 0.9775
+        }
+    },
+    "features": [
+        "amount",
+        "oldbalanceOrg",
+        "newbalanceOrig",
+        "oldbalanceDest",
+        "newbalanceDest",
+        "balance_diff_orig",
+        "balance_diff_dest",
+        "orig_balance_zero",
+        "dest_balance_zero",
+        "amount_to_balance_ratio",
+        "hour_of_day",
+        "day_of_simulation",
+        "is_late_night",
+        "is_high_risk_type",
+        "is_transfer",
+        "is_cash_out",
+        "expected_new_balance_orig",
+        "balance_mismatch_orig",
+        "expected_new_balance_dest",
+        "balance_mismatch_dest",
+        "has_balance_mismatch",
+        "amount_zscore",
+        "is_large_transaction",
+        "is_round_amount",
+        "log_amount",
+        "receiver_was_empty",
+        "large_amount_to_empty"
+    ],
+    "transaction_type_mapping": {
+        "CASH_IN": 0,
+        "CASH_OUT": 1,
+        "DEBIT": 2,
+        "PAYMENT": 3,
+        "TRANSFER": 4
+    },
+    "fraud_threshold": 0.5,
+    "high_risk_threshold": 0.8
+}
