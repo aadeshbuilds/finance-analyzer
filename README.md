@@ -60,24 +60,6 @@ FinShield AI is a **production-grade machine learning system** for detecting fra
 
 ---
 
-## 🤖 ML Pipeline
-
-Raw Data (6.3M transactions)
-↓
-Stratified Sampling (58K rows)
-↓
-Data Cleaning & Preprocessing
-↓
-Feature Engineering (27 features)
-↓
-Model Training + Hyperparameter Tuning
-↓
-Evaluation (ROC-AUC, F1, Confusion Matrix)
-↓
-Streamlit Dashboard
-↓
-Streamlit Cloud Deployment
-
 ---
 
 ## 🤖 ML Pipeline
