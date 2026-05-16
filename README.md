@@ -131,27 +131,20 @@ streamlit run app/streamlit_app.py
 
 ## 📁 Project Structure
 
-finance-analyzer/
-├── app/
-│   └── streamlit_app.py      # Main Streamlit dashboard
-├── src/
-│   ├── preprocessing.py      # Data cleaning pipeline
-│   ├── features.py           # Feature engineering
-│   ├── train.py              # Model training + tuning
-│   ├── evaluate.py           # Model evaluation + charts
-│   └── model_utils.py        # Prediction utilities
-├── models/
-│   ├── best_model_pipeline.pkl
-│   ├── xgboost_pipeline.pkl
-│   └── model_config.json
-├── data/
-│   ├── raw/                  # Original dataset
-│   └── processed/            # Cleaned data
-├── notebooks/
-│   └── eda.ipynb             # Exploratory analysis
-├── reports/                  # Generated charts
-├── requirements.txt
-└── README.md
+| Path | Description |
+|------|-------------|
+| `app/streamlit_app.py` | Main Streamlit dashboard |
+| `src/preprocessing.py` | Data cleaning pipeline |
+| `src/features.py` | Feature engineering (27 features) |
+| `src/train.py` | Model training + hyperparameter tuning |
+| `src/evaluate.py` | Model evaluation + chart generation |
+| `src/model_utils.py` | Prediction utilities |
+| `models/` | Saved model pipelines (.pkl files) |
+| `data/raw/` | Original dataset |
+| `data/processed/` | Cleaned and feature-engineered data |
+| `notebooks/eda.ipynb` | Exploratory data analysis |
+| `reports/` | Generated evaluation charts |
+| `requirements.txt` | Project dependencies |
 
 ---
 
