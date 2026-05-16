@@ -817,6 +817,37 @@ def render_upload(pipeline, config):
     </div>
     """, unsafe_allow_html=True)
 
+    # generate sample CSV
+    sample_data = pd.DataFrame({
+        'step':           [1, 2, 3, 4, 5],
+        'type':           ['PAYMENT','TRANSFER','CASH_OUT','PAYMENT','TRANSFER'],
+        'amount':         [9839.64, 1864.28, 181.00, 11668.14, 7817.71],
+        'oldbalanceOrg':  [170136.0, 21249.0, 181.0, 41554.0, 53860.0],
+        'newbalanceOrig': [160296.36, 19384.72, 0.0, 29885.86, 46042.29],
+        'oldbalanceDest': [0.0, 0.0, 0.0, 0.0, 0.0],
+        'newbalanceDest': [0.0, 0.0, 0.0, 0.0, 0.0],
+    })
+
+    col_download, col_info = st.columns([1, 3])
+    with col_download:
+        st.download_button(
+            label="⬇️ Download Sample CSV",
+            data=sample_data.to_csv(index=False),
+            file_name="sample_transactions.csv",
+            mime="text/csv",
+            help="Download this sample file, then upload it below to test the analyzer"
+        )
+    with col_info:
+        st.markdown("""
+        <div class='alert-info' style='margin:0'>
+            <span>💡</span>
+            <span>New here? Download the sample CSV above,
+            then upload it below to see the analyzer in action instantly.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
     uploaded = st.file_uploader(
         "Drop your CSV file here or click to browse",
         type=['csv']
@@ -1056,15 +1087,22 @@ def render_single(pipeline):
                     <span style='font-size:0.82rem;color:#475569;font-weight:500'>{label}</span>
                     <span style='font-size:0.85rem;color:#e2e8f0;font-weight:600'>{val}</span>
                 </div>"""
-            st.markdown(f"""
-            <div class='glass-card'>
-                <div style='font-size:0.82rem;font-weight:600;color:#818cf8;
-                            text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem'>
-                    Summary
+            st.markdown("**Summary**")
+            for label,val in [
+                ("Type",     tx_type),
+                ("Amount",   f"${amount:,.2f}"),
+                ("Step",     str(step)),
+                ("Balance Δ",f"-${amount:,.2f}"),
+                ("Risk",     result['risk_level']),
+            ]:
+                st.markdown(f"""
+                <div style='display:flex;justify-content:space-between;
+                            padding:0.5rem 0;
+                            border-bottom:1px solid rgba(99,102,241,0.08)'>
+                    <span style='color:#475569;font-size:0.85rem'>{label}</span>
+                    <span style='color:#e2e8f0;font-weight:600;font-size:0.85rem'>{val}</span>
                 </div>
-                {rows_html}
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
 
