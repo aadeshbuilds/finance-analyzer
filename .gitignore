@@ -10,8 +10,8 @@ data/raw/
 data/processed/
 
 # Trained models can be large — excluded by default
-models/*.pkl
-models/*.joblib
+# models/*.pkl
+# models/*.joblib
 
 # Jupyter checkpoints
 .ipynb_checkpoints/

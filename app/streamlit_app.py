@@ -495,10 +495,32 @@ COLORS = {
 @st.cache_resource
 def load_model_and_config():
     try:
-        config   = load_config("models/model_config.json")
-        pipeline = load_pipeline("best", "models/")
+        base = os.path.dirname(os.path.abspath(__file__))
+        root = os.path.dirname(base)
+
+        possible_model_dirs = [
+            os.path.join(root, "models"),
+            os.path.join(base, "models"),
+            "models",
+        ]
+
+        models_dir = None
+        for path in possible_model_dirs:
+            if os.path.exists(os.path.join(path, "model_config.json")):
+                models_dir = path
+                break
+
+        if models_dir is None:
+            st.error("Models directory not found!")
+            return None, None, False
+
+        config_path = os.path.join(models_dir, "model_config.json")
+        config      = load_config(config_path)
+        pipeline    = load_pipeline("best", models_dir)
         return config, pipeline, True
+
     except Exception as e:
+        st.error(f"Error loading model: {e}")
         return None, None, False
 
 
