@@ -60,8 +60,6 @@ FinShield AI is a **production-grade machine learning system** for detecting fra
 
 ---
 
----
-
 ## 🤖 ML Pipeline
 
 | Step | Description |
