@@ -53,40 +53,18 @@ html, body, [class*="css"], .stApp {
     color: #f1f5f9;
 }
 
-#MainMenu, footer, header, .stDeployButton { display: none !important; }
-
+#MainMenu, footer, .stDeployButton {
+    display: none !important;
+}
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #0f172a; }
 ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 4px; }
 
 .main .block-container {
-    padding: 0 !important;
+    padding-top: 1rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
     max-width: 100% !important;
-}
-
-/* ── SIDEBAR ALWAYS VISIBLE ─────────────────────────────── */
-[data-testid="stSidebar"] {
-    background: #080f1e !important;
-    border-right: 1px solid rgba(99,102,241,0.15) !important;
-    padding: 0 !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
-}
-[data-testid="collapsedControl"] {
-    display: none !important;
-}
-section[data-testid="stSidebar"] {
-    width: 260px !important;
-    min-width: 260px !important;
-    transform: none !important;
-    visibility: visible !important;
-}
-section[data-testid="stSidebar"] > div {
-    width: 260px !important;
-    padding: 0 !important;
-}
-button[kind="header"] {
-    display: none !important;
 }
 
 /* ── radio nav ──────────────────────────────────────────── */
@@ -437,14 +415,323 @@ button[kind="header"] {
     margin: 2rem 0;
 }
 
-.content-wrapper { padding: 2rem 3rem; }
-
+.content-wrapper {
+    padding: 1.5rem 2rem;
+}
 @keyframes logo-pulse {
     0%,100% { filter: drop-shadow(0 0 8px rgba(99,102,241,0.6)); }
     50%      { filter: drop-shadow(0 0 20px rgba(99,102,241,0.9)); }
 }
 .logo-icon { animation: logo-pulse 3s ease-in-out infinite; }
 </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+
+/* ── SIDEBAR BASE ── */
+[data-testid="stSidebar"] {
+    background: #080f1e !important;
+    border-right: 1px solid rgba(99,102,241,0.15) !important;
+    padding: 0 !important;
+}
+
+/* ── DESKTOP: always visible, fixed ── */
+@media (min-width: 769px) {
+    section[data-testid="stSidebar"] {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        transform: none !important;
+        visibility: visible !important;
+        display: block !important;
+        position: sticky !important;
+        top: 0 !important;
+        height: 100vh !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child {
+        width: 260px !important;
+        overflow-y: auto !important;
+        height: 100vh !important;
+    }
+    [data-testid="collapsedControl"],
+    [data-testid="baseButton-headerNoPadding"],
+    button[kind="header"],
+    [data-testid="stSidebarCollapseButton"] {
+        display: none !important;
+    }
+}
+
+/* ── MOBILE: overlay drawer ── */
+@media (max-width: 768px) {
+
+    .main .block-container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        padding-top: 3.5rem !important;
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* ensure Streamlit header is visible so sidebar button works */
+    header[data-testid="stHeader"] {
+        display: block !important;
+        visibility: visible !important;
+        background: transparent !important;
+        height: auto !important;
+        pointer-events: none !important;
+    }
+    header[data-testid="stHeader"] * {
+        pointer-events: auto !important;
+    }
+
+    section[data-testid="stSidebar"] {
+        width: 260px !important;
+        min-width: 260px !important;
+        max-width: 260px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        z-index: 1000 !important;
+        overflow-y: auto !important;
+        box-shadow: 8px 0 40px rgba(0,0,0,0.9) !important;
+        border-right: 1px solid rgba(99,102,241,0.25) !important;
+    }
+
+    /* ── >> OPEN button (collapsed state) ─────────────── */
+    [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0.6rem !important;
+        left: 0.6rem !important;
+        z-index: 9999 !important;
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        min-height: 46px !important;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        border-radius: 14px !important;
+        border: none !important;
+        box-shadow: 0 4px 20px rgba(99,102,241,0.6),
+                    0 0 30px rgba(99,102,241,0.15) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        overflow: hidden !important;
+    }
+    [data-testid="collapsedControl"] button {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        cursor: pointer !important;
+        color: #ffffff !important;
+    }
+    [data-testid="collapsedControl"] button svg {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+        width: 24px !important;
+        height: 24px !important;
+    }
+    [data-testid="collapsedControl"]:active {
+        transform: scale(0.9) !important;
+    }
+
+    /* ── << CLOSE button (inside sidebar) ────────────── */
+    [data-testid="stSidebarCollapseButton"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: absolute !important;
+        top: 0.6rem !important;
+        right: 0.6rem !important;
+        left: auto !important;
+        z-index: 1002 !important;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        background: rgba(239, 68, 68, 0.15) !important;
+        border: 1px solid rgba(239, 68, 68, 0.4) !important;
+        border-radius: 12px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button {
+        display: flex !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        cursor: pointer !important;
+        color: #f87171 !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button svg {
+        fill: #f87171 !important;
+        color: #f87171 !important;
+        width: 22px !important;
+        height: 22px !important;
+    }
+    [data-testid="stSidebarCollapseButton"]:active {
+        background: rgba(239, 68, 68, 0.35) !important;
+    }
+
+    .glass-card, .feature-card, .stat-card, .step-card {
+        padding: 1rem !important;
+        border-radius: 14px !important;
+    }
+    .hero-container  { padding: 2rem 1rem !important; }
+    .content-wrapper { padding: 1rem !important; }
+    h1 { font-size: 2rem !important; line-height: 1.2 !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.2rem !important; }
+    .stat-value { font-size: 1.5rem !important; }
+    .stButton > button { padding: 0.8rem 1rem !important; font-size: 0.9rem !important; }
+    [data-testid="stFileUploader"] { padding: 1rem !important; }
+    .stTabs [data-baseweb="tab"] { padding: 6px 10px !important; font-size: 0.8rem !important; }
+    .js-plotly-plot { width: 100% !important; }
+    [data-testid="stDataFrame"] { overflow-x: auto !important; }
+}
+
+</style>
+
+<script>
+(function() {
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    function styleOpenButton(el) {
+        if (!isMobile()) return;
+        Object.assign(el.style, {
+            display: 'flex',
+            visibility: 'visible',
+            opacity: '1',
+            position: 'fixed',
+            top: '0.6rem',
+            left: '0.6rem',
+            zIndex: '9999',
+            width: '46px',
+            height: '46px',
+            minWidth: '46px',
+            minHeight: '46px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            borderRadius: '14px',
+            border: 'none',
+            boxShadow: '0 4px 20px rgba(99,102,241,0.6), 0 0 30px rgba(99,102,241,0.15)',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            overflow: 'hidden',
+            padding: '0'
+        });
+        var btn = el.querySelector('button');
+        if (btn) {
+            Object.assign(btn.style, {
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                background: 'transparent',
+                border: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0',
+                margin: '0',
+                cursor: 'pointer',
+                color: '#ffffff'
+            });
+        }
+        var svgs = el.querySelectorAll('svg');
+        svgs.forEach(function(svg) {
+            svg.style.fill = '#ffffff';
+            svg.style.width = '24px';
+            svg.style.height = '24px';
+            svg.style.color = '#ffffff';
+        });
+    }
+
+    function styleCloseButton(el) {
+        if (!isMobile()) return;
+        Object.assign(el.style, {
+            display: 'flex',
+            visibility: 'visible',
+            opacity: '1',
+            position: 'absolute',
+            top: '0.6rem',
+            right: '0.6rem',
+            left: 'auto',
+            zIndex: '1002',
+            width: '40px',
+            height: '40px',
+            minWidth: '40px',
+            minHeight: '40px',
+            background: 'rgba(239,68,68,0.15)',
+            border: '1px solid rgba(239,68,68,0.4)',
+            borderRadius: '12px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            padding: '0'
+        });
+        var btn = el.querySelector('button');
+        if (btn) {
+            Object.assign(btn.style, {
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                background: 'transparent',
+                border: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0',
+                cursor: 'pointer',
+                color: '#f87171'
+            });
+        }
+        var svgs = el.querySelectorAll('svg');
+        svgs.forEach(function(svg) {
+            svg.style.fill = '#f87171';
+            svg.style.width = '22px';
+            svg.style.height = '22px';
+            svg.style.color = '#f87171';
+        });
+    }
+
+    function applySidebarStyles() {
+        var openBtn = document.querySelector('[data-testid="collapsedControl"]');
+        if (openBtn) styleOpenButton(openBtn);
+
+        var closeBtn = document.querySelector('[data-testid="stSidebarCollapseButton"]');
+        if (closeBtn) styleCloseButton(closeBtn);
+    }
+
+    // Apply on load
+    applySidebarStyles();
+
+    // Re-apply whenever DOM changes (Streamlit re-renders frequently)
+    var observer = new MutationObserver(function() {
+        applySidebarStyles();
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+
+    // Also re-apply on resize
+    window.addEventListener('resize', applySidebarStyles);
+})();
+</script>
 """, unsafe_allow_html=True)
 
 
@@ -616,11 +903,14 @@ def batch_predict(df: pd.DataFrame, pipeline) -> pd.DataFrame:
 # =============================================================
 # SIDEBAR
 # =============================================================
+
 def render_sidebar(config):
     with st.sidebar:
         st.markdown("""
-        <div style='padding:2rem 1.5rem 1rem;'>
-            <div style='display:flex;align-items:center;gap:0.8rem;margin-bottom:0.3rem'>
+        <div style='padding:1.2rem 1.5rem 0.5rem;
+                    display:flex;align-items:center;
+                    justify-content:space-between'>
+            <div style='display:flex;align-items:center;gap:0.8rem'>
                 <span class='logo-icon' style='font-size:2rem'>🛡️</span>
                 <div>
                     <div style='font-size:1.2rem;font-weight:800;
