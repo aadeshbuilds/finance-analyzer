@@ -1112,6 +1112,18 @@ def render_single(pipeline):
 # =============================================================
 def render_performance(config):
     st.markdown("<div class='content-wrapper'>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style='background:rgba(245,158,11,0.08);
+                border:1px solid rgba(245,158,11,0.25);
+                border-radius:12px;padding:1rem 1.2rem;
+                color:#f59e0b;font-size:0.85rem;
+                margin-bottom:1rem'>
+        ⚠️ <strong>Disclaimer:</strong> FinShield AI is a demonstration project 
+        built for educational purposes. Results should not be used as the sole 
+        basis for fraud detection decisions. Always consult your bank or financial 
+        institution for official fraud reporting.
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("<div class='section-title'>📊 Model Performance</div>",
                 unsafe_allow_html=True)
 
