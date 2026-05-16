@@ -1363,7 +1363,10 @@ def render_single(pipeline):
             'oldbalanceDest':old_dest,'newbalanceDest':new_dest,
         }
         with st.spinner("Running AI inference..."):
-            result = predict_fraud(tx,model_name="best",models_dir="models/")
+            base = os.path.dirname(os.path.abspath(__file__))
+            root = os.path.dirname(base)
+            models_dir = os.path.join(root,"models") if os.path.exists(os.path.join(root,"models","model_config.json")) else "models"
+            result = predict_fraud(tx,model_name="best",models_dir=models_dir)
             time.sleep(0.3)
 
         st.markdown("<div class='fancy-divider'></div><div class='section-title'>🎯 Analysis Result</div>",
@@ -1388,18 +1391,6 @@ def render_single(pipeline):
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        with c3:
-            rows_html = ""
-            for label,val in [("Type",tx_type),("Amount",f"${amount:,.2f}"),
-                               ("Step",str(step)),("Balance Δ",f"-${amount:,.2f}"),
-                               ("Risk",result['risk_level'])]:
-                rows_html += f"""
-                <div style='display:flex;justify-content:space-between;align-items:center;
-                            padding:0.7rem 0;border-bottom:1px solid rgba(99,102,241,0.08)'>
-                    <span style='font-size:0.82rem;color:#475569;font-weight:500'>{label}</span>
-                    <span style='font-size:0.85rem;color:#e2e8f0;font-weight:600'>{val}</span>
-                </div>"""
-            st.markdown("**Summary**")
             for label,val in [
                 ("Type",     tx_type),
                 ("Amount",   f"${amount:,.2f}"),
