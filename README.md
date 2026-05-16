@@ -80,13 +80,18 @@ Streamlit Cloud Deployment
 
 ---
 
-## 📊 Models Trained
+## 🤖 ML Pipeline
 
-| Model | ROC-AUC | F1 Score | Precision | Recall |
-|-------|---------|----------|-----------|--------|
-| **XGBoost** ⭐ | 0.9998 | 0.9991 | 1.0000 | 0.9982 |
-| Random Forest | 0.9998 | 0.9991 | 1.0000 | 0.9982 |
-| Logistic Regression | 0.9982 | 0.9461 | 0.9167 | 0.9775 |
+| Step | Description |
+|------|-------------|
+| 1️⃣ Raw Data | 6.3M transactions from PaySim dataset |
+| 2️⃣ Sampling | Stratified sampling → 58K rows, all fraud kept |
+| 3️⃣ Cleaning | Drop leaky columns, encode categoricals |
+| 4️⃣ Features | Engineer 27 ML features across 5 categories |
+| 5️⃣ Training | RandomizedSearchCV + StratifiedKFold on 3 models |
+| 6️⃣ Evaluation | ROC-AUC, F1, Confusion Matrix, Feature Importance |
+| 7️⃣ Dashboard | Streamlit dark UI with Plotly charts |
+| 8️⃣ Deployment | Streamlit Cloud — live and accessible |
 
 ---
 
